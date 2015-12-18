@@ -101,8 +101,10 @@ plt.plot(lijst_web_min, label ='Minimale Transacties')
 plt.plot(lijst_web_max, label ='Maximale Transacties')
 plt.plot(lijst_web_gem, label ='Gemiddelde Transacties')
 plt.legend(loc='upper right')
-plt.show()
+plt.gcf().set_size_inches(30, 10.5)
 plt.savefig('grafiek_web.png')
+plt.show()
+
 
 #Gegevens FTP omzetten naar grafiek
 plt.xticks(xas, uitgevoerd_tijd)
@@ -111,8 +113,8 @@ plt.plot(lijst_ftp_min, label ='Minimale Mislukte FTP Inlogpogingen')
 plt.plot(lijst_ftp_max, label ='Maximale Mislukte FTP Inlogpogingen')
 plt.plot(lijst_ftp_gem, label ='Gemiddelde Mislukte FTP Inlogpogingen')
 plt.legend(loc='upper right')
-plt.savefig('C:\scripts\grafiek_ftp.png')
-plt.show()
+plt.gcf().set_size_inches(30, 10.5)
+plt.savefig('grafiek_ftp.png')
 
 
 
