@@ -5,12 +5,7 @@ from lxml import etree
 
 #Objecten
 tree = etree.parse('c:\scripts\onderwerpen.xml')
-xml_uptime_locatie = tree.xpath('/locaties/powershell_scripts/Get_Uptime/locatie[1]/text()')[0]
-xml_ftplog_locatie = tree.xpath('/locaties/logs/ftp/locatie[1]/text()')[0]
-xml_weblog_locatie = tree.xpath('/locaties/logs/web/locatie[1]/text()')[0]
 xml_csv_locatie = tree.xpath('/locaties/csv/locatie[1]/text()')[0]
-xml_ftplog_cachelocatie = tree.xpath('/locaties/logs/ftp/cache_locatie[1]/text()')[0]
-xml_weblog_cachelocatie = tree.xpath('/locaties/logs/web/cache_locatie[1]/text()')[0]
 
 csv_lezen = open(xml_csv_locatie, ('r'))
 csv_uitlezen = csv_lezen.readlines()
@@ -22,6 +17,15 @@ for transactie_data in csv_uitlezen:
 del(lijst_web)[0]
 lijst_web = [int(i) for i in lijst_web]
 print (lijst_web)
+
+
+#Totaal mislukte ftp login pogingen uitlezen
+lijst_ftp = []
+for mis_ftp_data in csv_uitlezen:
+    lijst_ftp.append(mis_ftp_data.split(';')[10])
+del(lijst_ftp)[0]
+lijst_ftp = [int(i) for i in lijst_ftp]
+print (lijst_ftp)
 csv_lezen.close()
 
 #minimale transacties uitlezen
@@ -32,6 +36,14 @@ del(lijst_web_min)[0]
 lijst_web_min = [int(i) for i in lijst_web_min]
 print (lijst_web_min)
 
+#minimale mislukte ftp pogingen uitlezen
+lijst_ftp_min = []
+for mis_ftp_data in csv_uitlezen:
+    lijst_ftp_min.append(mis_ftp_data.split(';')[11])
+del(lijst_ftp_min)[0]
+lijst_ftp_min = [int(i) for i in lijst_ftp_min]
+print (lijst_ftp_min)
+
 #maximale transacties uitlezen
 lijst_web_max = []
 for transactie_data in csv_uitlezen:
@@ -40,13 +52,29 @@ del(lijst_web_max)[0]
 lijst_web_max = [int(i) for i in lijst_web_max]
 print (lijst_web_max)
 
-#maximale transacties uitlezen
+#maximale mislukte ftp pogingen uitlezen
+lijst_ftp_max = []
+for mis_ftp_data in csv_uitlezen:
+    lijst_ftp_max.append(mis_ftp_data.split(';')[12])
+del(lijst_ftp_max)[0]
+lijst_ftp_max = [int(i) for i in lijst_ftp_max]
+print (lijst_ftp_max)
+
+#Gemiddelde transacties uitlezen
 lijst_web_gem = []
 for transactie_data in csv_uitlezen:
     lijst_web_gem.append(transactie_data.split(';')[9])
 del(lijst_web_gem)[0]
 lijst_web_gem = [int(i) for i in lijst_web_gem]
 print (lijst_web_gem)
+
+#Gemiddelde mislukte ftp inlog pogingen uitlezen
+lijst_ftp_gem = []
+for mis_ftp_data in csv_uitlezen:
+    lijst_ftp_gem.append(mis_ftp_data.split(';')[13])
+del(lijst_ftp_gem)[0]
+lijst_ftp_gem = [int(i) for i in lijst_ftp_gem]
+print (lijst_ftp_gem)
 
 #uitgevoerde tijd
 uitgevoerd_tijd = []
@@ -55,49 +83,36 @@ for transactie_data in csv_uitlezen:
 del(uitgevoerd_tijd)[0]
 print (uitgevoerd_tijd)
 
+#Bereking xas-waardes web
 aantal_tijden = (len(uitgevoerd_tijd))
-lijst = []
+tijden_lijst = []
 nummer = -1
 for i in range (aantal_tijden):
     nummer +=1
-    lijst.extend([nummer])
-delen = max(lijst_web_max) / nummer
-print(delen)
-yaxis_lijst = []
-nummer_y = 1
-for i in range (nummer):
-    nummer_y += 1
-    max_nummer = delen * nummer_y
-    yaxis_lijst.extend([max_nummer])
-print(lijst)
-print(yaxis_lijst)
+    tijden_lijst.extend([nummer])
+print(tijden_lijst)
 
-x = np.array(lijst)
-y = np.array(yaxis_lijst)
-my_xticks = uitgevoerd_tijd
-plt.xticks(x, my_xticks)
+
+#Gegevens web omzetten naar grafiek
+xas = np.array(tijden_lijst)
+plt.xticks(xas, uitgevoerd_tijd)
 plt.plot(lijst_web, label ='Aantal Transacties')
-plt.plot(lijst_web_min, label ='Minimale transacties')
-plt.plot(lijst_web_max, label ='Maximale transacties')
-plt.plot(lijst_web_gem, label ='Gemiddelde transacties')
+plt.plot(lijst_web_min, label ='Minimale Transacties')
+plt.plot(lijst_web_max, label ='Maximale Transacties')
+plt.plot(lijst_web_gem, label ='Gemiddelde Transacties')
+plt.legend(loc='upper right')
+plt.show()
+plt.savefig('grafiek_web.png')
+
+#Gegevens FTP omzetten naar grafiek
+plt.xticks(xas, uitgevoerd_tijd)
+plt.plot(lijst_ftp, label ='Aantal Mislukte FTP Inlogpogingen')
+plt.plot(lijst_ftp_min, label ='Minimale Mislukte FTP Inlogpogingen')
+plt.plot(lijst_ftp_max, label ='Maximale Mislukte FTP Inlogpogingen')
+plt.plot(lijst_ftp_gem, label ='Gemiddelde Mislukte FTP Inlogpogingen')
+plt.legend(loc='upper right')
+plt.savefig('C:\scripts\grafiek_ftp.png')
 plt.show()
 
 
 
-
-
-
-##plt.grid(True)
-##plt.title('Transacties (min, max, gem)')
-##plt.ylabel('Aantal transacties')
-
-##plt.bar(lijst, lijst_web, align='center')
-##plt.bar(lijst, lijst_web_min, align='center')
-##plt.bar(lijst, lijst_web_max, align='center')
-##plt.bar(lijst, lijst_web_gem, align='center')
-##plt.xticks(lijst, uitgevoerd_tijd)
-####plt.axis([1200, 1500, 0, 9000])
-##plt.legend(loc='upper left')
-##
-##
-##plt.show()
