@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<locaties>
+    <powershell_scripts>
+        <Get_Uptime>
+            <locatie>C:\scripts\Get-Uptime.ps1</locatie>
+        </Get_Uptime>
+    </powershell_scripts>
+
+    <logs>
+        <ftp>
+            <locatie>C:\xampp\filezillaftp\logs\filezilla server.log</locatie>
+            <cache_locatie>C:\scripts\aantal_mislukte_ftplogin.log</cache_locatie>
+        </ftp>
+        <web>
+            <locatie>C:\xampp\apache\logs\access.log</locatie>
+            <cache_locatie>C:\scripts\aantal_web_transacties.log</cache_locatie>
+        </web>
+    </logs>
+
+    <csv>
+        <locatie>C:\scripts\rapportage.csv</locatie>
+    </csv>
+</locaties>
