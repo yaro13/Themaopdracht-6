@@ -102,7 +102,7 @@ plt.plot(lijst_web_max, label ='Maximale Transacties')
 plt.plot(lijst_web_gem, label ='Gemiddelde Transacties')
 plt.legend(loc='upper right')
 plt.gcf().set_size_inches(30, 10.5)
-plt.savefig('grafiek_web.png')
+plt.savefig('C:\inetpub\wwwroot\Thema6\grafiek_web.png')
 plt.show()
 
 
@@ -114,7 +114,7 @@ plt.plot(lijst_ftp_max, label ='Maximale Mislukte FTP Inlogpogingen')
 plt.plot(lijst_ftp_gem, label ='Gemiddelde Mislukte FTP Inlogpogingen')
 plt.legend(loc='upper right')
 plt.gcf().set_size_inches(30, 10.5)
-plt.savefig('grafiek_ftp.png')
+plt.savefig('C:\inetpub\wwwroot\Thema6\grafiek_ftp.png')
 
 
 
